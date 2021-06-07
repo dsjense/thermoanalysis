@@ -2,6 +2,7 @@ import scipy.constants as spc
 
 
 AU2EV = spc.value("Hartree energy in eV")  # Hartree to eV
+AU2J = spc.value("Hartree energy")  # Hartree to J
 CAL2J = spc.calorie
 J2CAL = 1 / CAL2J  # Joule to calorie
 J2AU = 1 / spc.value("Hartree energy")  # Joule to Hartree

@@ -112,24 +112,24 @@ class QCData:
 
     @property
     def is_linear(self):
-        """Wether the molecule is linear.
+        """Whether the molecule is linear.
 
         Returns
         -------
         is_linear : bool
-            Wether the molecule is linear.
+            Whether the molecule is linear.
         """
         # return self.point_group in ("cinf", "dinfh")
         return self._linear
 
     @property
     def is_atom(self):
-        """Wether the 'molecule' consists of only an atom.
+        """Whether the 'molecule' consists of only an atom.
 
         Returns
         -------
         is_atoms : bool
-            Wether the molecule is only one atom.
+            Whether the molecule is only one atom.
         """
         return len(self.masses) == 1
 
@@ -233,13 +233,13 @@ class QCData:
         Returns
         -------
         aligned : bool
-            Wether the principal axes are aligned or not.
+            Whether the principal axes are aligned or not.
         """
         w, v = np.linalg.eigh(self.inertia_tensor())
         return np.allclose(v, np.eye(3)), v
 
     def align_principal_axes(self):
-        """Align the principal axes to the cartesian axes.
+        """Align the principal axes to the Cartesian axes.
 
         https://math.stackexchange.com/questions/145023
         """

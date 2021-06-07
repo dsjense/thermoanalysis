@@ -29,7 +29,8 @@ ThermoResults = namedtuple(
         "point_group sym_num "
         "U_el U_trans U_rot U_vib U_therm U_tot ZPE H "
         "S_trans S_rot S_vib S_el S_tot "
-        "TS_trans TS_rot TS_vib TS_el TS_tot G dG"
+        "TS_trans TS_rot TS_vib TS_el TS_tot G dG "
+        "C_P"
     ),
 )
 
@@ -64,7 +65,7 @@ def electronic_entropy(multiplicity):
 
 
 def translation_energy(temperature):
-    """Kinectic energy of an ideal gas.
+    """Kinetic energy of an ideal gas.
 
     See [1] for reference.
 
@@ -80,6 +81,22 @@ def translation_energy(temperature):
     """
     U_trans = 3 / 2 * KBAU * temperature
     return U_trans
+
+
+def translational_constant_volume_heat_capacity():
+    """Constant volume heat capacity from translational motion.
+    
+    Parameters
+    ----------
+    temperature : float
+        Absolute temperature in Kelvin.
+
+    Returns
+    -------
+    C_V_trans : float
+        Constant volume heat capacity in J/(mol*K).
+    """
+    return 3 / 2e0 * R
 
 
 def sackur_tetrode(molecular_mass, temperature, pressure=1e5):
@@ -179,9 +196,9 @@ def rotational_energy(temperature, is_linear, is_atom):
     temperature : float
         Absolute temperature in Kelvin.
     is_linear : bool
-        Wether the molecule is linear.
+        Whether the molecule is linear.
     is_atom : bool
-        Wether the molcule is an atom.
+        Whether the molecule is an atom.
 
     Returns
     -------
@@ -189,17 +206,32 @@ def rotational_energy(temperature, is_linear, is_atom):
         Rotational energy in Hartree / particle.
     """
     if is_atom:
-        rot_energy = 0
+        U_rot = 0
     elif is_linear:
-        rot_energy = R * temperature
-
-    U_rot = 3 / 2 * KBAU * temperature
+        U_rot = KBAU * temperature
+    else:
+        U_rot = 3 / 2 * KBAU * temperature
     return U_rot
 
 
-def rotational_entropy(
-    temperature, rot_temperatures, symmetry_number, is_linear, is_atom
-):
+def rotational_constant_volume_heat_capacity():
+    """Constant volume heat capacity from translational motion.
+    
+    Parameters
+    ----------
+    temperature : float
+        Absolute temperature in Kelvin.
+
+    Returns
+    -------
+    C_V_trans : float
+        Constant volume heat capacity in J/(mol*K).
+    """
+    return 3 / 2e0 * R
+
+
+def rotational_entropy(temperature, rot_temperatures, symmetry_number, 
+                       is_linear, is_atom):
     """Rotational entropy.
 
     See [1] for reference.
@@ -213,9 +245,9 @@ def rotational_entropy(
     symmetry_number : int
         Symmetry number.
     is_linear : bool
-        Wether the molecule is linear.
+        Whether the molecule is linear.
     is_atom : bool
-        Wether the molcule is an atom.
+        Whether the molecule is an atom.
 
     Returns
     -------
@@ -287,6 +319,15 @@ def vibrational_energy(temperature, frequencies):
         vib_temperatures * (1 / 2 + 1 / (np.exp(vib_temperatures / temperature) - 1))
     )
     return U_vib
+
+
+def vibrational_constant_volume_heat_capacity(temperature, frequencies):
+    vib_temperatures = PLANCK * frequencies / KB
+    # print('vib_temperatures = {} K'.format(vib_temperatures))
+    exponent = vib_temperatures / temperature
+    # print('exponent=', exponent)
+    C_V = R * np.sum(np.exp(-exponent) * (exponent / (1 - np.exp(-exponent)))**2)
+    return C_V
 
 
 def harmonic_vibrational_entropies(temperature, frequencies):
@@ -445,6 +486,11 @@ def thermochemistry(qc, temperature, pressure=1e5, kind="qrrho"):
     S_tot = S_el + S_trans + S_rot + S_vib
     G = H - T * S_tot
     dG = G - U_el
+    
+    C_V = (translational_constant_volume_heat_capacity() 
+           + rotational_constant_volume_heat_capacity()
+           + vibrational_constant_volume_heat_capacity(T, qc.vib_frequencies))
+    C_P = C_V + R
 
     thermo = ThermoResults(
         T=temperature,
@@ -473,6 +519,7 @@ def thermochemistry(qc, temperature, pressure=1e5, kind="qrrho"):
         TS_tot=T * S_tot,
         G=G,
         dG=dG,
+        C_P=C_P,
     )
     return thermo
 
