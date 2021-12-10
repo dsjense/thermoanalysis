@@ -138,7 +138,7 @@ INFO   : the flag for use of LIBINT has been found!
 ================================================================================
                                        INPUT FILE
 ================================================================================
-NAME = /pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.inp
+NAME = H2O_PBE-PBE0.inp
 |  1> ! ZORA-def2-TZVP def2/J RIJCOSX TightSCF D3BJ ABC
 |  2> ! PBE0 freq Grid5 FinalGrid6
 |  3> %pal
@@ -226,7 +226,7 @@ Atom   1H    basis set group =>   1
 Atom   2O    basis set group =>   2
 
 Checking for AutoStart:
-The File: /pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.gbw exists
+The File: H2O_PBE-PBE0.gbw exists
 Trying to determine its content:
      ... Fine, the file contains calculation information
      ... Fine, the calculation information was read
@@ -366,7 +366,7 @@ Orbital energies will be scaled
 
 
 General Settings:
- Integral files         IntName         .... /pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0
+ Integral files         IntName         .... H2O_PBE-PBE0
  Hartree-Fock type      HFTyp           .... RHF
  Total Charge           Charge          ....    0
  Multiplicity           Mult            ....    1
@@ -691,11 +691,11 @@ SCF CONVERGENCE
   Last Orbital Gradient      ...    1.0320e-06  Tolerance :   1.0000e-05
   Last Orbital Rotation      ...    5.0603e-07  Tolerance :   1.0000e-05
 
-             **** THE GBW FILE WAS UPDATED (/pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.gbw) ****
-             **** DENSITY FILE WAS UPDATED (/pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.scfp) ****
-             **** ENERGY FILE WAS UPDATED (/pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.en.tmp) ****
-             **** THE GBW FILE WAS UPDATED (/pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.gbw) ****
-             **** DENSITY FILE WAS UPDATED (/pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.scfp) ****
+             **** THE GBW FILE WAS UPDATED (H2O_PBE-PBE0.gbw) ****
+             **** DENSITY FILE WAS UPDATED (H2O_PBE-PBE0.scfp) ****
+             **** ENERGY FILE WAS UPDATED (H2O_PBE-PBE0.en.tmp) ****
+             **** THE GBW FILE WAS UPDATED (H2O_PBE-PBE0.gbw) ****
+             **** DENSITY FILE WAS UPDATED (H2O_PBE-PBE0.scfp) ****
 ----------------
 ORBITAL ENERGIES
 ----------------
@@ -931,8 +931,8 @@ FINAL SINGLE POINT ENERGY       -76.487766198369
 Dipole Moment Calculation                       ... on
 Quadrupole Moment Calculation                   ... off
 Polarizability Calculation                      ... off
-GBWName                                         ... /pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.gbw
-Electron density file                           ... /pscratch/jjlutz/orca/H2O_PBE/H2O_PBE-PBE0.scfp
+GBWName                                         ... H2O_PBE-PBE0.gbw
+Electron density file                           ... H2O_PBE-PBE0.scfp
 The origin for moment calculation is the CENTER OF MASS  = (-5.355847,  1.092627  0.828102)
 
 -------------
